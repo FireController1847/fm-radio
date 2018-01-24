@@ -1,0 +1,25 @@
+{
+  "name": "fmradio",
+  "version": "1.0.0",
+  "description": "FM Radio is a music bot that's intended to give you the most smooth experience with personalization, control, and more in your Discord guild.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FireController1847/discord-fm-radio.git"
+  },
+  "author": "FireController#1847",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FireController1847/discord-fm-radio/issues"
+  },
+  "homepage": "https://github.com/FireController1847/discord-fm-radio#readme",
+  "dependencies": {
+    "discord.js": "github:hydrabolt/discord.js",
+    "klaw": "^2.1.1",
+    "mongodb": "^3.0.1",
+    "snekfetch": "^3.6.1"
+  }
+}
