@@ -43,8 +43,8 @@ module.exports = class DatabaseManager {
       + this.client.config.mongodb.database;
     console.log(logPre, "Connecting...");
     try {
-      this.mClient = new MongoClient();
-      this.db = await this.mClient.connect(mCURL);
+      this.mClient = await MongoClient.connect(mCURL, null);
+      this.db = this.mClient.db("FMRadio");
       console.log(logPre, "Connected.");
       this.register();
       return this.db;
@@ -90,11 +90,13 @@ module.exports = class DatabaseManager {
     return await this.db.collection(name);
   }
   async getGuildData(gid) {
+    if (!this.db) return null;
     const gCollection = await this.getCollection(this.client.config.mongodb.collections.guildData);
     const dCollection = await this.getCollection(this.client.config.mongodb.collections.donationData);
-    if (!gCollection || !dCollection) return false;
+    if (!gCollection || !dCollection) return null;
     let gData = await gCollection.findOne({"gid": gid});
-    if (!gData) gData = await this.makeNewGuild(gid, true);
+    // if (!gData) gData = await this.makeNewGuild(gid, true);
+    if (!dData) return null;
     delete gData._id;
     const da = await dCollection.findOne({"guild_id": gid});
     if (!da) gData.donationAmount = 0;

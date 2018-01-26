@@ -6,8 +6,8 @@ const request = require("request");
 const klaw = require("klaw");
 const path = require("path");
 // PathList
-const pCommands = path.join(__dirname, "commands");
-const pEvents = path.join(__dirname, "events");
+const pCommands = path.join(__dirname, "Commands");
+const pEvents = path.join(__dirname, "Events");
 // Client
 new class FMRadio extends Client {
   constructor() {
@@ -17,6 +17,7 @@ new class FMRadio extends Client {
       "default": "#00FF8F"
     };
     this.setup();
+    console.log("Connecting...");
     this.login(this.config.tokens.main);
   }
   // Setup
@@ -24,9 +25,13 @@ new class FMRadio extends Client {
     this.setupLogger();
     this.setupGames();
     this.setupCollections();
+    this.setupDatabase();
     this.register();
   }
   setupGames() {
+    if (this.status != 0) return this.gameLoop = setTimeout(() => {
+      this.setupGames();
+    }, 1500);
     if (this.config.maintenance.major) return this.user.setActivity("Under Maintenance");
     const gList = [
       "YouTube ▶",
@@ -83,7 +88,7 @@ new class FMRadio extends Client {
       file = path.parse(file.path);
       if (!file.ext || file.ext != ".js") return;
       const fName = `${file.dir}/${file.base}`;
-      if (require.cahce[require.resolve(fName)]) delete require.cache[require.resolve(fName)];
+      if (require.cache[require.resolve(fName)]) delete require.cache[require.resolve(fName)];
       const cmd = new (require(fName))(this);
       this.commands.set(cmd.name, cmd);
     });
@@ -94,8 +99,8 @@ new class FMRadio extends Client {
       if (!file.ext || file.ext != ".js") return;
       const evt = new (require(`${file.dir}/${file.base}`))(this);
       this.events.set(evt.name, evt);
-      this.on(evt.name, () => {
-        this.events.get(evt.name).execute();
+      this.on(evt.name, (...args) => {
+        this.events.get(evt.name).execute(...args);
       });
     });
   }
@@ -153,11 +158,13 @@ new class FMRadio extends Client {
     const vCount = await this.shard.fetchClientValues(clientValue);
     return vCount.reduce((a, b) => a + b, 0);
   }
-  async getGuildCount() {
-    return this.getAndReduce("guilds.size");
+  async getCommand(name) {
+    if (this.commands.has(name)) return this.commands.get(name);
+    this.commands.forEach(c => { if (c.aliases && c.aliases.includes(name)) return c; });
+    return null;
   }
-  async getTotalConnections() {
-    return this.getAndReduce("connections.size");
+  getAllArguments(args, text) {
+    return text.substring(args.map(a => a.length + 1).reduce((a, b) => a + b, 0), text.length);
   }
 };
-process.on("unhandledRejection", console.error);
+process.on("unhandledRejection", console.trace);
