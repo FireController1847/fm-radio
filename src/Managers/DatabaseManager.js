@@ -96,7 +96,7 @@ module.exports = class DatabaseManager {
     if (!gCollection || !dCollection) return null;
     let gData = await gCollection.findOne({"gid": gid});
     // if (!gData) gData = await this.makeNewGuild(gid, true);
-    if (!dData) return null;
+    if (!gData) return null;
     delete gData._id;
     const da = await dCollection.findOne({"guild_id": gid});
     if (!da) gData.donationAmount = 0;
