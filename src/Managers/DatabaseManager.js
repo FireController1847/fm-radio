@@ -70,7 +70,7 @@ module.exports = class DatabaseManager {
       if (me) console.error(`Error: ${me}`);
       process.exit();
     });
-    this.db.on("timeout", me => {
+    this.db.on("timeout", () => {
       console.error("The database has timed out. Reconnecting!");
       this.connect();
     });
