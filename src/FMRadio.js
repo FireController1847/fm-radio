@@ -9,12 +9,12 @@ const path = require("path");
 const pCommands = path.join(__dirname, "Commands");
 const pEvents = path.join(__dirname, "Events");
 // Client
-new class FMRadio extends Client {
+module.exports = new class FMRadio extends Client {
   constructor() {
-    super({"disableEveryone": true});
+    super({ disableEveryone: true });
     this.config = require("./Config.js");
     this.colors = {
-      "default": "#00FF8F"
+      default: "#00FF8F"
     };
     this.setup();
     console.log("Connecting...");
@@ -29,9 +29,12 @@ new class FMRadio extends Client {
     this.register();
   }
   setupGames() {
-    if (this.status != 0) return this.gameLoop = setTimeout(() => {
-      this.setupGames();
-    }, 1500);
+    if (this.status != 0) {
+      this.gameLoop = setTimeout(() => {
+        this.setupGames();
+      }, 1500);
+      return;
+    }
     if (this.config.maintenance.major) return this.user.setActivity("Under Maintenance");
     const gList = [
       "YouTube ▶",
@@ -52,7 +55,7 @@ new class FMRadio extends Client {
   setupLogger() {
     const client = this;
     const ocl = console.log;
-    console.log = function() {
+    console.log = function log() {
       const args = [];
       args.push(`[Shard ${client.shard.id}]`);
       for (let i = 0; i < arguments.length; i++) {
@@ -61,7 +64,7 @@ new class FMRadio extends Client {
       ocl.apply(console, args);
     };
     const oce = console.error;
-    console.error = function() {
+    console.error = function logerr() {
       const args = [];
       args.push(`[Shard ${client.shard.id}]`);
       for (let i = 0; i < arguments.length; i++) {
@@ -107,49 +110,57 @@ new class FMRadio extends Client {
   // Utilities
   async utilUpdateWeb(updateAll) {
     const logPre = "[WU]";
-    // discord.pw - disallows snekfetch
+    // Discord.pw - disallows snekfetch
     request("https://bots.discord.pw/api/bots/255933783293820928/stats", {
-      "method": "POST",
-      "headers": {"Content-Type": "application/json", "Authorization": this.config.tokens.websites.discordpw},
-      "json": {"server_count": this.guilds.size, "shard_id": this.shard.id, "shard_count": this.shard.count}
-    }, e => { 
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": this.config.tokens.websites.discordpw },
+      json: { server_count: this.guilds.size, shard_id: this.shard.id, shard_count: this.shard.count }
+    }, e => {
       if (e) return console.warn(logPre, "Unable to update discord.pw\n", e.body);
       console.log(logPre, "Successfully updated discord.pw");
     });
-    // discordbots.org
-    snekfetch.post("https://discordbots.org/api/bots/255933783293820928/stats").set("Content-Type", "application/json").set("Authorization", this.config.tokens.websites.discordbots).send({"server_count": this.guilds.size, "shard_id": this.shard.id, "shard_count": this.shard.count}).then(() => {
-      console.log(logPre, "Successfully updated discordbots.org");
-    }).catch(e => {
-      console.warn(logPre, "Unable to update discordbots.org\n", e.body);
-    });
+    // Discordbots.org
+    snekfetch.post("https://discordbots.org/api/bots/255933783293820928/stats")
+      .set("Content-Type", "application/json")
+      .set("Authorization", this.config.tokens.websites.discordbots)
+      .send({ server_count: this.guilds.size, shard_id: this.shard.id, shard_count: this.shard.count })
+      .then(() => {
+        console.log(logPre, "Successfully updated discordbots.org");
+      }).catch(e => {
+        console.warn(logPre, "Unable to update discordbots.org\n", e.body);
+      });
     if (!updateAll) return;
     const sAvailable = await this.getAllShardsAvailable();
     if (!sAvailable) return console.warn("Unable to update all websites as a shard is unavailable.");
     let gCount;
     try {
       gCount = await this.shard.fetchClientValues("guilds.size");
-    } catch(e) {
+    } catch (e) {
       return console.warn(logPre, "Unable to fetch all guilds.");
     }
     gCount = gCount.reduce((a, b) => a + b, 0);
-    // carbonitex.net
-    snekfetch.post("https://www.carbonitex.net/discord/data/botdata.php").set("Content-Type", "application/x-www-form-urlencoded").send({"key": this.config.tokens.websites.carbon, "servercount": gCount}).then(() => {
-      console.log(logPre, "Successfully updated carbonitex.net");
-    }).catch(e => {
-      console.warn(logPre, "Unable to update carbonitex.net\n", e.body);
-    });
-    // discordlist.net
-    snekfetch.post("https://bots.discordlist.net/api").set("Content-Type", "application/x-www-form-urlencoded").send({"token": this.config.tokens.websites.discordlist, "servers": gCount}).then(() => {
-      console.log(logPre, "Successfully updated discordlist.net");
-    }).catch(e => {
-      console.warn(logPre, "Unable to update discordlist.net\n", e.body);
-    });
+    // Carbonitex.net
+    snekfetch.post("https://www.carbonitex.net/discord/data/botdata.php")
+      .set("Content-Type", "application/x-www-form-urlencoded")
+      .send({ key: this.config.tokens.websites.carbon, servercount: gCount }).then(() => {
+        console.log(logPre, "Successfully updated carbonitex.net");
+      }).catch(e => {
+        console.warn(logPre, "Unable to update carbonitex.net\n", e.body);
+      });
+    // Discordlist.net
+    snekfetch.post("https://bots.discordlist.net/api")
+      .set("Content-Type", "application/x-www-form-urlencoded")
+      .send({ token: this.config.tokens.websites.discordlist, servers: gCount }).then(() => {
+        console.log(logPre, "Successfully updated discordlist.net");
+      }).catch(e => {
+        console.warn(logPre, "Unable to update discordlist.net\n", e.body);
+      });
   }
   // Getters
   async getAllShardsAvailable() {
     try {
       await this.shard.fetchClientValues("ping");
-    } catch(e) {
+    } catch (e) {
       return false;
     }
     return true;
@@ -158,7 +169,7 @@ new class FMRadio extends Client {
     const vCount = await this.shard.fetchClientValues(clientValue);
     return vCount.reduce((a, b) => a + b, 0);
   }
-  async getCommand(name) {
+  getCommand(name) {
     if (this.commands.has(name)) return this.commands.get(name);
     this.commands.forEach(c => { if (c.aliases && c.aliases.includes(name)) return c; });
     return null;
