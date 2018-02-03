@@ -5,4 +5,10 @@ module.exports = class Command {
     this.name = name;
     this.aliases = aliases || [];
   }
+  start(m) {
+    return m.channel.startTyping();
+  }
+  end(m) {
+    return m.channel.stopTyping();
+  }
 };
