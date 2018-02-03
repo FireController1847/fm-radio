@@ -5,10 +5,13 @@ module.exports = class extends Command {
   }
   execute(m) {
     if (!m.isOwner) return m.errors.notBotOwner();
+    this.start(m);
     try {
-      return m.channel.send(`\`\`\`js\n${eval(this.client.getAllArguments([m.args[0]], m.content))}\n\`\`\``);
+      m.channel.send(`\`\`\`js\n${eval(this.client.getAllArguments([m.args[0]], m.content))}\n\`\`\``);
+      return this.end(m);
     } catch (e) {
-      return m.channel.send(`\`\`\`js\n${e.stack}\n\`\`\``);
+      m.channel.send(`\`\`\`js\n${e.stack}\n\`\`\``);
+      return this.end(m);
     }
   }
 };
