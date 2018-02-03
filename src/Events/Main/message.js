@@ -67,7 +67,7 @@ module.exports = class extends Event {
     } catch (e) {
       // ...
     }
-    const cmd = await this.client.getCommand(m.command);
+    const cmd = this.client.getCommand(m.command);
     if (!cmd) return;
     if (!m.isDM) {
       console.log(`User ${m.author.username} (${m.author.id}) issued server command ` +

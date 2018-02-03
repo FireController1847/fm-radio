@@ -1,7 +1,10 @@
 const Command = require("../../Constructors/Command.js");
 module.exports = class extends Command {
   constructor(client, filePath) {
-    super(client, filePath, { name: "ping" });
+    super(client, filePath, {
+      name: "ping",
+      desc: "Pings the bot for the current WebSocket speed."
+    });
   }
   execute(m) {
     this.start(m);
