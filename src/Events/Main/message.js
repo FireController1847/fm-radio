@@ -19,7 +19,7 @@ module.exports = class extends Event {
     const mreg = new RegExp(`^<@!?${this.client.user.id}>`);
     if (mreg.test(m.content)) {
       m.content = m.prefix + m.content.replace(mreg, "").replace(" ", "");
-      m.mentions.users = m.mentions.users.filter(u => u.id != this.user.id);
+      m.mentions.users = m.mentions.users.filter(u => u.id != this.client.user.id);
       if (m.content.toLowerCase().includes("what") && m.content.toLowerCase().includes("prefix")) {
         m.content = `${m.prefix}prefix`;
       }
