@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/FireController1847/discord-fm-radio#readme",
   "dependencies": {
-    "discord.js": "github:hydrabolt/discord.js",
+    "discord.js": "git+https://github.com/FireController1847/discord.js.git#internal-sharding",
     "klaw": "^2.1.1",
     "lodash": "^4.17.4",
     "mongodb": "^3.0.1",
