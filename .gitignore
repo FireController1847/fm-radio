@@ -58,4 +58,5 @@ typings/
 .env
 
 # fm-radio
-config.*
+*.key
+old/

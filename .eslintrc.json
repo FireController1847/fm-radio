@@ -8,7 +8,6 @@
     "node": true
   },
   "rules": {
-    "no-await-in-loop": "warn",
     "no-extra-parens": ["warn", "all", {
       "nestedBinaryExpressions": false
     }],
@@ -54,7 +53,6 @@
     "array-bracket-spacing": "error",
     "block-spacing": "error",
     "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
-    "capitalized-comments": ["error", "always", { "ignoreConsecutiveComments": true }],
     "comma-dangle": ["error"],
     "comma-spacing": "error",
     "comma-style": "error",
@@ -81,7 +79,7 @@
     "operator-linebreak": ["error", "after"],
     "padded-blocks": ["error", "never"],
     "quote-props": ["error", "consistent-as-needed"],
-    "quotes": ["error", "double", { "avoidEscape": true, "allowTemplateLiterals": true }],
+    "quotes": ["error", "single", { "avoidEscape": true, "allowTemplateLiterals": true }],
     "semi-spacing": "error",
     "semi": "error",
     "space-before-blocks": "error",

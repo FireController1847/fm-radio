@@ -1,27 +1,29 @@
 {
   "name": "fmradio",
   "version": "1.0.0",
-  "description": "FM Radio is a music bot that's intended to give you the most smooth experience with personalization, control, and more in your Discord guild.",
+  "description": "FM Radio is a music bot that's intended to give you the most smooth experience with personalization, control, and more in your Discord guild. Based off of previous bots developed by FireController#1847, it's concept has been built upon for years and is intended to provide easy to use controls while still having the ability to customize the crap out of it.",
   "main": "index.js",
+  "devDependencies": {
+    "discord.js": "github:hydrabolt/discord.js#5cf8a63",
+    "jsdoc": "^3.5.5",
+    "moment-timezone": "^0.5.14",
+    "node-opus": "^0.2.7"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run lint",
+    "docs": "docgen --source src --custom docs/index.yml --output docs/docs.json --jsdoc jsdoc.json",
+    "docs:test": "docgen --source src --custom docs/index.yml --jsdoc jsdoc.json",
+    "lint": "eslint ./src *.js",
+    "lint:fix": "eslint ./src *.js --fix"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/FireController1847/discord-fm-radio.git"
   },
   "author": "FireController#1847",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/FireController1847/discord-fm-radio/issues"
   },
-  "homepage": "https://github.com/FireController1847/discord-fm-radio#readme",
-  "dependencies": {
-    "discord.js": "git+https://github.com/FireController1847/discord.js.git#internal-sharding",
-    "klaw": "^2.1.1",
-    "lodash": "^4.17.4",
-    "mongodb": "^3.0.1",
-    "request": "^2.83.0",
-    "snekfetch": "^3.6.1"
-  }
+  "homepage": "https://github.com/FireController1847/discord-fm-radio#readme"
 }
