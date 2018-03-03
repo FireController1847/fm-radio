@@ -50,7 +50,7 @@ class DBManager {
       mongo.database}`;
     this.mclient = null;
     this.db = null;
-    this.skipResetter = setInterval(async () => {
+    this.skipResetter = setInterval(() => {
       if (this.client.shard.id != this.client.shard.count - 1) return;
       if ((new Date()).getMinutes() == 0) {
         let guildData;
