@@ -8,7 +8,7 @@ class Ready extends Event {
   execute() {
     this.client.debug(`Online and ready! Currently on ` +
       `${this.client.guilds.size} guild${this.client.guilds.size == 1 ? '' : 's'}.`);
-    this.client.user.setPresence('dnd', { activity: { name: `${messages.prefix}help`, type: 'STREAMING' } });
+    this.client.user.setPresence(`dnd`, { activity: { name: `${messages.prefix}help`, type: 'STREAMING' } });
   }
 }
 
