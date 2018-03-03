@@ -1,4 +1,4 @@
-const Event = require('../structures/Event.js');
+const Event = require('../../structures/Event.js');
 
 class Error extends Event {
   constructor(client, path) {

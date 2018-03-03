@@ -1,4 +1,4 @@
-const Event = require('../structures/Event.js');
+const Event = require('../../structures/Event.js');
 
 class Disconnect extends Event {
   constructor(client, path) {
