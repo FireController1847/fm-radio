@@ -21,6 +21,7 @@
     "eslint": "^4.18.2",
     "klaw": "^2.1.1",
     "moment-timezone": "^0.5.14",
+    "mongodb": "^3.0.3",
     "node-opus": "^0.2.7"
   }
 }
