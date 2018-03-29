@@ -106,11 +106,12 @@ class MongoDB {
     return this.collections.donations.col;
   }
   async verifyDataIntegrity(gid, data) {
-    const newData = _.merge(new DefaultServer(gid), data);
+    const newData = _.merge(JSON.parse(JSON.stringify(new DefaultServer(gid))), data);
     if (_.isEqual(data, newData)) {
       return data;
     } else {
-      await this.guilds.updateOne({ gid }, newData);
+      console.log('failed to verify');
+      await this.guilds.update({ gid }, newData);
       return newData;
     }
   }
