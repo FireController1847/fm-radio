@@ -20,7 +20,15 @@ const client = new AkairoClient({
   shardId: 6,
   shardCount: 20
 });
-
+client.debug = function() {
+  const args = Array.prototype.slice.call(arguments);
+  args.unshift(`[Shard ${client.options.shardId}]`);
+  console.log.apply(console, args);
+};
+client.error = function() {
+  const args = Array.prototype.slice.call(arguments);
+  args.unshift(`[Shard ${client.options.shardId}]`);
+  console.error.apply(console, args);
+};
 client.mongo = new MongoDB(client);
-
 client.login(token);

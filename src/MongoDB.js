@@ -48,32 +48,44 @@ class MongoDB {
     this.DefaultServer = DefaultServer;
     this.connect();
   }
+  // Logging
+  debug() {
+    const args = Array.prototype.slice.call(arguments);
+    args.unshift(`[Database]`);
+    this.bot.debug.apply(this.bot, args);
+  }
+  error() {
+    const args = Array.prototype.slice.call(arguments);
+    args.unshift(`[Database]`);
+    this.error.debug.apply(this.bot, args);
+  }
+  // Connection
   async connect() {
-    console.log('Database connecting...');
+    this.debug('Database connecting...');
     try {
       this.client = await MongoClient.connect(this.build(), null);
     } catch (e) {
-      return console.error(e);
+      return this.error(e);
     }
-    console.log('Database connected.');
+    this.debug('Database connected.');
     this.db = this.client.db(mongo.database);
-    console.log(`Database ${mongo.database} selected.`);
+    this.debug(`Database ${mongo.database} selected.`);
 
     this.db.on('close', mongoError => {
-      console.error('Database Randomly Closed');
-      if (mongoError) console.error(`Error: ${mongoError.stack}`);
+      this.error('Database Randomly Closed');
+      if (mongoError) this.error(`Error: ${mongoError.stack}`);
     });
     this.db.on('error', mongoError => {
-      console.error('Database Internal Error');
-      if (mongoError) console.error(`Error: ${mongoError.stack}`);
+      this.error('Database Internal Error');
+      if (mongoError) this.error(`Error: ${mongoError.stack}`);
     });
     this.db.on('reconnect', mongoError => {
       this.debug('Database Reconnected');
-      if (mongoError) console.error(`Error: ${mongoError.stack}`);
+      if (mongoError) this.error(`Error: ${mongoError.stack}`);
     });
     this.db.on('timeout', mongoError => {
-      console.error('Database Timeout');
-      if (mongoError) console.error(`Error: ${mongoError.stack}`);
+      this.error('Database Timeout');
+      if (mongoError) this.error(`Error: ${mongoError.stack}`);
     });
 
     return this.db;
@@ -110,7 +122,7 @@ class MongoDB {
     if (_.isEqual(data, newData)) {
       return data;
     } else {
-      console.log('failed to verify');
+      this.debug('failed to verify');
       await this.guilds.update({ gid }, newData);
       return newData;
     }
@@ -123,7 +135,7 @@ class MongoDB {
     await this.guilds.deleteMany({ gid });
     const data = new DefaultServer(gid);
     await this.guilds.insertOne(data);
-    console.log(!guild ? `I've joined ${gid}.` : `I've ${(isMissing ? 'added missing guild' : 'joined')} ` +
+    this.debug(!guild ? `I've joined ${gid}.` : `I've ${(isMissing ? 'added missing guild' : 'joined')} ` +
     `${guild.name} (${guild.id}) owned by ${guild.owner.user.username} (${guild.owner.id}).`);
     return data;
   }

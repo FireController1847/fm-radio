@@ -12,7 +12,7 @@ class ClientReady extends Listener {
       url: 'https://www.twitch.tv/firecontroller1847',
       type: 'STREAMING'
     });
-    console.log(`Online and ready! This shard is on ${this.client.guilds.size} guilds.`);
+    this.client.debug(`Online and ready! This shard is on ${this.client.guilds.size} guilds.`);
   }
 }
 
