@@ -12,7 +12,7 @@ class ShardInfo extends Command {
   exec(m) {
     if (!this.client.shard) return m.channel.send('This version of FM Radio is currently not sharded, so this option is unavailable.');
     return m.channel.send(ce(
-      this.client.akairoOptions.colors.orange, null, 'Shard Information',
+      this.client.options.colors.green, null, 'Shard Information',
       'Here\'s some information about the part of me that\'s on your server!',
       [
         { inline: true, name: ':1234: Total Shards', value: this.client.shard.count },

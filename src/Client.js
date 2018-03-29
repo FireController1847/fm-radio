@@ -10,15 +10,15 @@ const client = new AkairoClient({
   emitters: { process },
   commandDirectory: path.join(__dirname, 'Commands'),
   inhibitorDirectory: path.join(__dirname, 'Inhibitors'),
-  listenerDirectory: path.join(__dirname, 'Listeners'),
+  listenerDirectory: path.join(__dirname, 'Listeners')
+}, {
+  disableEveryone: true,
+  shardId: 6,
+  shardCount: 20,
   // Custom Options
   colors: {
     green: '#00FF8F'
   }
-}, {
-  disableEveryone: true,
-  shardId: 6,
-  shardCount: 20
 });
 client.debug = function() {
   const args = Array.prototype.slice.call(arguments);
