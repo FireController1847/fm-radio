@@ -57,7 +57,7 @@ class MongoDB {
   error() {
     const args = Array.prototype.slice.call(arguments);
     args.unshift(`[Database]`);
-    this.error.debug.apply(this.bot, args);
+    this.bot.debug.apply(this.bot, args);
   }
   // Connection
   async connect() {
