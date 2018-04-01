@@ -1,5 +1,6 @@
 const { AkairoClient } = require('discord-akairo');
 const MongoDB = require('./MongoDB.js');
+const Music = require('./Music.js');
 const path = require('path');
 const { token } = require('./Data/Tokens.js');
 
@@ -31,4 +32,5 @@ client.error = function() {
   console.error.apply(console, args);
 };
 client.mongo = new MongoDB(client);
+client.music = new Music(client);
 client.login(token);
