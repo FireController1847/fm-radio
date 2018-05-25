@@ -1,29 +1,39 @@
 {
-  "name": "fmradio",
-  "version": "1.0.0",
+  "name": "fmradio-6.2",
+  "version": "6.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run lint",
-    "lint": "eslint ./src *.js",
-    "lint:fix": "eslint ./src *.js --fix"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FireController1847/discord-fm-radio.git"
+    "url": "git+https://github.com/FireController1847/fm-radio.git"
   },
   "author": "FireController#1847",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/FireController1847/discord-fm-radio/issues"
+    "url": "https://github.com/FireController1847/fm-radio/issues"
   },
-  "homepage": "https://github.com/FireController1847/discord-fm-radio#readme",
+  "homepage": "https://github.com/FireController1847/fm-radio#readme",
+  "dependencies": {
+    "discord-akairo": "1Computer1/discord-akairo",
+    "discord.js": "hydrabolt/discord.js",
+    "embed-creator": "^1.2.3",
+    "erlpack": "^0.1.2",
+    "lodash": "^4.17.10",
+    "moment-timezone": "^0.5.17",
+    "mongodb": "^3.1.0-beta4",
+    "node-opus": "^0.3.0",
+    "pretty-ms": "^3.1.0",
+    "snekfetch": "^4.0.0",
+    "uws": "^10.148.0",
+    "youtube-playlist-info": "benkaiser/youtube-playlist-info",
+    "youtube-search": "^1.1.1",
+    "ytdl-core": "fent/node-ytdl-core",
+    "zlib-sync": "^0.1.4"
+  },
   "devDependencies": {
-    "discord.js": "github:hydrabolt/discord.js",
-    "eslint": "^4.18.2",
-    "klaw": "^2.1.1",
-    "moment-timezone": "^0.5.14",
-    "mongodb": "^3.0.3",
-    "node-opus": "^0.2.7"
+    "eslint": "^4.19.1"
   }
 }

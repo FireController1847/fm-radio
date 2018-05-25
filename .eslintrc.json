@@ -8,7 +8,9 @@
     "node": true
   },
   "rules": {
-    "no-extra-parens": ["warn", "all", { "nestedBinaryExpressions": false }],
+    "no-extra-parens": ["warn", "all", {
+      "nestedBinaryExpressions": false
+    }],
     "accessor-pairs": "warn",
     "require-await": "warn",
     "no-compare-neg-zero": "error",
@@ -25,7 +27,6 @@
     "no-multi-spaces": "error",
     "no-new-func": "error",
     "no-new-wrappers": "error",
-    "no-new": "error",
     "no-octal-escape": "error",
     "no-return-assign": "error",
     "no-return-await": "error",
@@ -43,7 +44,6 @@
     "wrap-iife": "error",
     "yoda": "error",
     "no-shadow": "error",
-    "no-undef-init": "error",
     "callback-return": "error",
     "handle-callback-err": "error",
     "no-mixed-requires": "error",
@@ -55,7 +55,6 @@
     "comma-spacing": "error",
     "comma-style": "error",
     "computed-property-spacing": "error",
-    "func-names": "error",
     "func-style": ["error", "declaration", { "allowArrowFunctions": true }],
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "key-spacing": "error",
@@ -81,7 +80,11 @@
     "semi-spacing": "error",
     "semi": "error",
     "space-before-blocks": "error",
-    "space-before-function-paren": ["error", { "anonymous": "never", "named": "never", "asyncArrow": "always" }],
+    "space-before-function-paren": ["error", {
+      "anonymous": "never",
+      "named": "never",
+      "asyncArrow": "always"
+    }],
     "space-in-parens": "error",
     "space-infix-ops": "error",
     "space-unary-ops": "error",
@@ -94,7 +97,6 @@
     "no-useless-constructor": "error",
     "prefer-arrow-callback": "error",
     "prefer-numeric-literals": "error",
-    "prefer-template": "error",
     "rest-spread-spacing": "error",
     "template-curly-spacing": "error",
     "prefer-const": "error",
